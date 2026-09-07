@@ -46,11 +46,11 @@ export default function Register() {
   }
 
   return (
-    <section  className=" lg:w-[85%] md:w-full p-12 m-auto ">
+    <section  className=" lg:w-[85%] h-screen md:w-full p-12 m-auto ">
     
   
 
-    <h1 className="text-center font-bold text-5xl text-sky-800 ">Register Now</h1>
+    <h1 className="text-center font-bold text-5xl text-sky-800 mb-4 ">Register Now</h1>
     {/* <h2>x:{x.current}</h2>
     <button onClick={changeX}> chang X</button> */}
 

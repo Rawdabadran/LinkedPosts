@@ -21,7 +21,6 @@ import { useForm } from 'react-hook-form'
 
 import { GoImage } from "react-icons/go";
 
-import { QueryClient} from '@tanstack/react-query';
 
 
 

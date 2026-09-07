@@ -1,5 +1,5 @@
 
-import {Input, Label} from "@heroui/react";
+import {Input, Label, Link} from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import {useForm} from  "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -54,7 +54,7 @@ let  {setToken}=auth;
   }
 
   return (
-    <section  className=" lg:w-[85%] md:w-full p-12 m-auto ">
+    <section  className=" lg:w-[85%] h-screen md:w-full p-12 m-auto ">
     
   
 
@@ -80,8 +80,11 @@ let  {setToken}=auth;
  {errors.password&&(<p className="text-red-500 text-md text-start">{errors.password.message}</p>)}
  
 </div>
-    <Button className=" w-full my-4" type="submit" >Submit</Button>
-
+    <Button className=" w-full  my-4" type="submit" >Submit</Button>
+    <div className="  flex justify-between "> 
+    <span className=" text-start text-xs text-stone-400"> Don't have an account </span>
+<Link href="/Register" className="text-sky-900"> sign up  </Link>
+</div>
     </form>
     </section>
   )

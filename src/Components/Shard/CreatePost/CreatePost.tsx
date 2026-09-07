@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { GoImage } from "react-icons/go";
 import { baseUrl } from '../../ProjectApi/Api';
 import { AuthContext } from '../../../Contaxt/AuthContext';
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 export default function CreatePost() {
