@@ -15,7 +15,12 @@ export default function Nav() {
 
 
 
-const {name,username,email,photo}=userData || {};
+const {name,username,email,photo} = (userData ?? {}) as {
+  name?: string;
+  username?: string;
+  email?: string;
+  photo?: string;
+};
 
  
 
