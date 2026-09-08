@@ -37,7 +37,7 @@ const {name,username,email,photo} = (userData ?? {}) as {
 
  function logOut(){
   localStorage.removeItem("token");
-  <Navigate to ={'/'}/>;
+  <Navigate to ={''}/>;
    setToken(null);
    query.removeQueries({queryKey:["userdata"]})
 
