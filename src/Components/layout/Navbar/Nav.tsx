@@ -11,7 +11,8 @@ export default function Nav() {
  let [isMobile,setMobile]=useState(false);
  let [userMenue, setUserMenus]=useState(false);
 
- const {userData} = useContext(UserContext);
+ const userContext = useContext(UserContext);
+ const userData = userContext?.userData;
 
 
 

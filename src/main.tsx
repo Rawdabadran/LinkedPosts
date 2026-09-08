@@ -16,11 +16,13 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
    <QueryClientProvider client={queryClient}>
      <ReactQueryDevtools initialIsOpen={false} />
+     <AuthContextProvider>  
 <UserContextProvider>
-      <AuthContextProvider>  
+      
     <App />
-  </AuthContextProvider>
+  
     </UserContextProvider>
+    </AuthContextProvider>
    </QueryClientProvider>
     
   

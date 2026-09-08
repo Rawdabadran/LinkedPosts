@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import { baseUrl } from "../Components/ProjectApi/Api";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AuthContext } from "./AuthContext";
 
 type UserContextValue = {
   userData: unknown;
@@ -12,8 +13,10 @@ type UserContextValue = {
 export const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export default function UserContextProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
-  const queryClient = useQueryClient();
+
+
+  const {token} = useContext(AuthContext);
+
 
   async function getUserData() {
     return await axios.get(`${baseUrl}/users/profile-data`, {
@@ -31,7 +34,7 @@ export default function UserContextProvider({ children }: { children: ReactNode 
   });
 
   return (
-    <UserContext.Provider value={{ userData, token, setToken }}>
+    <UserContext.Provider value={{ userData}}>
       {children}
     </UserContext.Provider>
   );
