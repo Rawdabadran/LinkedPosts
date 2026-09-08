@@ -15,11 +15,11 @@ import SinglePostDetails from "../Pages/SinglePost/SinglePostDetails"
 
 
 export const routes =createBrowserRouter([
-   {path:'/',element:<Auth/>,errorElement:<NotFound/> ,children:[
+   {path:'',element:<Auth/>,errorElement:<NotFound/> ,children:[
     {index:true,element:<Login/>},
     {path:"Register" ,element:<Register/>}
    ]},
-     {path:'/',element:<MainProtected><Main/></MainProtected>,errorElement:<NotFound/> ,children:[
+     {path:'',element:<MainProtected><Main/></MainProtected>,errorElement:<NotFound/> ,children:[
     {path:'home',element:<Home/>},
     {path:"profile" ,element:<Profile/>},
    {path:"/postDetails/:postId" ,element:<SinglePostDetails/>}
