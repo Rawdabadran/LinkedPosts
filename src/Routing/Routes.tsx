@@ -26,4 +26,6 @@ export const routes =createBrowserRouter([
 
 
    ]}
-], )
+],{
+   basename:"/LinkedPosts"
+})
