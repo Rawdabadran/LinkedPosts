@@ -3,9 +3,12 @@ import Comment from "../Comments/Comment";
 import type { post } from "../../../interFaces/AllPosta";
 import CreateComment from "../CreateComment/CreateComment";
 export default function PostCard(details:post) {
+ 
 
+  console.log(details.comments)
 
   return ( 
+
     <div>
       <div className="bg-gray-100 max-h-auto flex items-center px-5  justify-center pt-10">
            <div className="bg-white  my-5  p-8 rounded-lg shadow-md w-full max-w-xl">
@@ -22,6 +25,7 @@ export default function PostCard(details:post) {
     {details.comments.map((comment: any) => (
       <Comment key={comment._id} topComment={comment} />
     ))}
+    
   </>
 ) : details.topComment ? (
   <Comment topComment={details.topComment as any} />

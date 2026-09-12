@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form'
 import { GoImage } from "react-icons/go";
 
 
-export function Drop({PostId}:{PostId:string}) {
+export function CommentDrop({PostId,ID}:{PostId:string,ID:string}) {
  
     const [isOpended,setOpend]=useState(false)
 
@@ -35,7 +35,7 @@ export function Drop({PostId}:{PostId:string}) {
         const  {token}=auth;
 
 async function DeletPosts(){
- return await axios.delete(`${baseUrl}/posts/${PostId}`,{
+ return await axios.delete(`${baseUrl}/posts/${PostId}/comments/${ID}`,{
        headers:{
                 Authorization:`Bearer ${token}`
                 
@@ -66,7 +66,7 @@ const {mutate,data}=useMutation({
 
 
 
- //Edit Post
+ //Edit
 
 
 
@@ -78,7 +78,7 @@ const {mutate,data}=useMutation({
 
   const {register,handleSubmit,reset} =useForm({
     defaultValues:{
-        body:" ",
+        content:" ",
     }
   })
   function sendFile(e:any){
@@ -89,7 +89,7 @@ const {mutate,data}=useMutation({
 
 
    async function EditPost(CommentData:any){
-    return  await axios.put(`${baseUrl}/posts/${PostId}`,CommentData,{
+    return  await axios.put(`${baseUrl}/posts/${PostId}/comments/${ID}`,CommentData,{
             headers:{
                 Authorization:`Bearer ${token}`
             }
@@ -108,6 +108,7 @@ const {mutate,data}=useMutation({
       toast.success(res.data.message)
      qurey.invalidateQueries({queryKey:["posts"]});
      qurey.invalidateQueries({queryKey:["userPosts"]})  ;
+      setOpend(false)  
 
     }
 
@@ -122,11 +123,11 @@ const {mutate,data}=useMutation({
  
      function SendData(data:any){
 
-    if (data.body || Imge) {
+    if (data.content || Imge) {
     const FD = new FormData();
 
-      if (data.body !== " ") {
-        FD.append("body", data.body)
+      if (data.content !== " ") {
+        FD.append("content", data.content)
       }
       if (Imge != null) {
         FD.append("image", Imge)
@@ -166,7 +167,7 @@ const {mutate,data}=useMutation({
     </Dropdown>
 
 
-    <Modal isOpen={isOpended} className ="w-full">
+    <Modal isOpen={isOpended} >
       
       <Modal.Backdrop className ="w-full" >
       <form action="" onSubmit={handleSubmit(SendData)}>  
@@ -175,13 +176,13 @@ const {mutate,data}=useMutation({
             <Modal.CloseTrigger onClick={()=>{setOpend(false)}}  />
             <Modal.Header>
 
-              <Modal.Heading>Edit Post</Modal.Heading>
+              <Modal.Heading>Edit Comment</Modal.Heading>
             </Modal.Header>
             <Modal.Body className="w-full">
              
                   <div className="bg-white mt-5 editor rounded-2xl  mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg w-full my-5">
                   
-                 <input  {...register("body")} className="title bg-gray-100 border rounded-3xl border-gray-300 p-2 px-5 mb-4 outline-none"  placeholder=" what you think.." type="text"/>
+                 <input  {...register("content")} className="title bg-gray-100 border rounded-3xl border-gray-300 p-2 px-5 mb-4 outline-none"  placeholder=" what you think.." type="text"/>
                 
                
                  {/* <!-- buttons --> */}
@@ -196,7 +197,7 @@ const {mutate,data}=useMutation({
             </Modal.Body>
             <Modal.Footer>
     
-                   {isPending?<button type='submit' className="btn border border-gray-700 p-1 px-4 font-semibold text-xs  rounded-2xl cursor-pointer text-gray-50 ml-2 bg-gray-500">posting...</button>:<button type='submit' onClick={()=>{setOpend(false)}}  className="btn border border-sky-700 p-1 px-4 font-semibold text-xs  rounded-2xl cursor-pointer text-gray-200 ml-2 bg-sky-700">Post</button>} 
+                   {isPending?<button type='submit' className="btn border border-gray-700 p-1 px-4 font-semibold text-xs  rounded-2xl cursor-pointer text-gray-50 ml-2 bg-gray-500">posting...</button>:<button type='submit' onClick={()=>{setOpend(false)}}  className="btn border border-sky-700 p-1 px-4 font-semibold text-xs  rounded-2xl cursor-pointer text-gray-200 ml-2 bg-sky-700">Edit</button>} 
              
             </Modal.Footer>
           </Modal.Dialog>

@@ -4,19 +4,29 @@ interface CommentProps {
 		commentCreator: {
 			name: string;
 			photo: string;
+			_id:string;
 		};
 		content: string;
 		reatedAt: string;
+		post: string;
+		_id:string;
+
+
 		
 	};
 }
 
-export default function Comment({ topComment: { commentCreator: { name, photo }, content, reatedAt } }: CommentProps) {
-  return (
+import { useContext } from "react";
+import { CommentDrop } from "../CommentDrop/CommentDrop"
+import { UserContext } from "../../../Contaxt/UserContext";
+export default function Comment({ topComment: { commentCreator: { name, photo,_id }, content, reatedAt,post,_id:CommentId} }: CommentProps) {
+ 
+	const {userData} = useContext(UserContext)
+	
+	return (
     <>
-      
-		<div className="mt-4">
 			
+		<div className="mt-4 flex justify-between ">
 			<div className="flex items-center space-x-2">
 				<img src={photo} alt={`${name}'s avatar`} className="w-6 h-6 rounded-full" />
 				<div>
@@ -26,6 +36,7 @@ export default function Comment({ topComment: { commentCreator: { name, photo },
 				</div>
 			</div>
 		
+		{userData._id===_id?(<CommentDrop PostId={post}  ID={CommentId}/>):""}	
 
 		</div>
     </>

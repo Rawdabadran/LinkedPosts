@@ -14,8 +14,11 @@ import type { LoginInterFace } from "../../../interFaces/login"
 
 
 
+
 export default function Login() {
   let Navegate =useNavigate();
+
+  // const [passWord, sendPass] = useState<string | null>(null)
 
   let auth  =useContext(AuthContext)
   if(!auth)
@@ -38,12 +41,15 @@ let  {setToken}=auth;
    try{
     
      let result= await sendLogDate(data);
-   
+    
      let mes=result.data.message;
      toast.success(mes);
      setToken(result.data.data.token)
     
      localStorage.setItem("token",result.data.data.token)
+
+     localStorage.setItem("password",data.password)
+
      Navegate('/home');
      
    }
@@ -78,6 +84,7 @@ let  {setToken}=auth;
   <Label htmlFor="pass"> PassWord</Label>
   <Input aria-label="password" id="pass" className="w-full" {...register("password")} type='password' placeholder="Enter your Password" /> 
  {errors.password&&(<p className="text-red-500 text-md text-start">{errors.password.message}</p>)}
+
  
 </div>
     <Button className=" w-full  my-4" type="submit" >Submit</Button>
@@ -85,7 +92,14 @@ let  {setToken}=auth;
     <span className=" text-start text-xs text-stone-400"> Don't have an account </span>
 <Link href="/Register" className="text-sky-900"> sign up  </Link>
 </div>
+
+ <div  className= {` flex justify-center `} > 
+
+</div>
     </form>
+  
+
     </section>
+
   )
 }

@@ -1,16 +1,18 @@
-import { useContext } from "react";
+import { useContext,useRef,useState } from "react";
 import CoverImg from "../../assets/Sky.jfif"
 import { UserContext } from "../../Contaxt/UserContext";
 import { AuthContext } from "../../Contaxt/AuthContext";
 import type { post } from "../../interFaces/AllPosta";
-
-import { useQuery } from "@tanstack/react-query";
+import { MdModeEditOutline } from "react-icons/md";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseUrl } from "../../Components/ProjectApi/Api";
 import PostCard from "../../Components/Shard/PostCard/PostCard";
 import Loading from "../../Components/Shard/loading/loading";
 import CreatePost from "../../Components/Shard/CreatePost/CreatePost";
 import { Helmet } from "react-helmet";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function Profile() {
 
@@ -32,7 +34,18 @@ const User  = useContext(UserContext);
      
    
    const  {userData}=User;
-   const {name,username,_id,email,photo,cover,followersCount,bookmarksCount,followingCount}=userData || {};
+   const {name,username,_id,email,photo,cover,followersCount,bookmarksCount,followingCount} =
+     (userData || {}) as {
+       name?: string;
+       username?: string;
+       _id?: string;
+       email?: string;
+       photo?: string;
+       cover?: string;
+       followersCount?: number;
+       bookmarksCount?: number;
+       followingCount?: number;
+     };
   //  console.log(userData)
 
 
@@ -53,6 +66,69 @@ const {data,isError,isLoading}=useQuery({
   queryFn:getUserPosts,
   select:(data)=>data?.data.data.posts
 })
+
+
+
+
+//edit profile img
+
+// const [Imge,setImge]=useState(null);
+
+ const fileInput = useRef<HTMLInputElement | null>(null)
+  
+
+
+
+
+
+   async function EditProfile(PhotoData:any){
+    return  await axios.put(`${baseUrl}/users/upload-photo`,PhotoData,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+         })
+
+   } 
+
+
+   const qurey =useQueryClient();
+
+  
+
+   const { mutate: mutateEdit, isPending } = useMutation({
+  mutationFn: EditProfile,
+  onSuccess: (res) => {
+    qurey.invalidateQueries({ queryKey: ["posts"] });
+    qurey.invalidateQueries({ queryKey: ["userPosts"] });
+    toast.success(res?.data?.message ?? "Photo updated");
+  },
+  onError: (err) => {
+    if (axios.isAxiosError(err) && err.response?.status === 429) {
+      toast.error("محاولات كتير، استني شوية وحاولي تاني");
+    } else {
+      toast.error("حصل خطأ، حاولي تاني");
+    }
+  },
+});
+
+function sendFile(e: any) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+
+
+  const FD = new FormData();
+  FD.append("photo", file);
+  mutateEdit(FD);
+}
+  
+  
+
+
+
+
+ 
+
 
 
 
@@ -106,15 +182,21 @@ const {data,isError,isLoading}=useQuery({
             <div className="relative flex flex-col min-w-0  bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
               <div className="px-6">
                 <div className="flex flex-wrap justify-center">
-                  <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                    <div className="relative">
+                  <div className="w-full lg:w-3/12 relative px-4 lg:order-2 flex justify-center">
+                    <div className="relative ">
                       <img
                         alt="..."
                         src={photo}
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
+                        className="shadow-xl  w-40 h-36 rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
                       />
+                     
                     </div>
+                     <MdModeEditOutline onClick={()=>{fileInput.current?.click()}} className="z-50    xl:top-2/3 xl:right-1/4   md:-mt-5  md:right-1/2  right-1/4  absolute border-2 text-sky-800 border-sky-500 rounded-full bg-white  text-2xl " />
+                    
                   </div>
+                    <input onChange={(e)=>{sendFile(e)}} 
+                       disabled={isPending}
+                      type="file" className="hidden" ref={fileInput} />
                   <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                     <div className="py-6 px-3 mt-32 sm:mt-0">
                  

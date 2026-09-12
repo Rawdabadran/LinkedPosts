@@ -67,6 +67,10 @@ const {name,username,email,photo} = (userData ?? {}) as {
           <li>
             <Link  to={'/profile'} className="text-gray-600 inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Profile</Link>
           </li>
+           <li>
+  <Link to="changepass"><span  className=" text-start text-sm  text-stone-600 no-underline hover:no-underline"> change password </span></Link>  
+
+      </li>
           <li>
             <a  href= " " onClick={()=>{logOut()}} className="inline-flex  items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading text-red-600 rounded">Sign out</a>
           </li>
@@ -85,6 +89,7 @@ const {name,username,email,photo} = (userData ?? {}) as {
       <li>
         <Link to={'/home'} className="block py-2 px-3 text-gray-500  text-sm  font-medium bg-brand rounded md:bg-transparent  md:p-0" aria-current="page">Home</Link>
       </li>
+      
      
       <li>
         <Link to={'/profile'} className="block py-2 px-3  text-gray-500  text-sm font-medium rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0  md:p-0 md:dark:hover:bg-transparent">ProFile</Link>

@@ -6,7 +6,7 @@ import { AuthContext } from "../../Contaxt/AuthContext";
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Shard/loading/loading";
-import PostCard from "../../Components/Shard/PostCard/PostCard";
+// import PostCard from "../../Components/Shard/PostCard/PostCard";
 import PostDetailsComments from "../../Components/PostDetailsComments/PostDetailsComments";
 
 export default function  SinglePostDetails ()
